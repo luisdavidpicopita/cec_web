@@ -1,0 +1,136 @@
+/* Colores */
+.color-header { background-color: #020946; }
+.color-footer { background-color: #232323; }
+.color-info { background-color: #079e3c; }
+.color-hr { border-color: #edbe00 !important; }
+
+/* Enlaces navbar */
+.nav-link, .dropdown-item {
+  color: #000 !important;
+  font-weight: 400;
+}
+.nav-link:hover, .dropdown-item:hover {
+  color: #0da743 !important;
+}
+
+/* Quitar flecha Bootstrap */
+.dropdown-toggle::after { display: none !important; }
+
+/* Animación dropdown (solo desktop) */
+.dropdown-menu {
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+.nav-item.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Botón cerrar menú móvil */
+.btn-close-offcanvas {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  z-index: 1101;
+}
+
+/* Ocultar botón cerrar en desktop */
+@media (min-width: 1200px) {
+  .btn-close-offcanvas { display: none; }
+}
+
+/* Botón hamburguesa */
+.navbar-toggler {
+  margin-top: 0.5rem;
+  z-index: 1050;
+  position: relative;
+}
+
+/* Menú lateral móvil */
+@media (max-width: 1199.98px) {
+  .offcanvas-collapse {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    width: 300px;
+    max-height: calc(100vh - 70px);
+    background: #f8f9fa;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    z-index: 1100;
+    overflow-y: auto;
+    padding: 1rem 1rem 2rem;
+    font-size: 1rem;
+  }
+  .offcanvas-collapse.show {
+    transform: translateX(0);
+  }
+  .offcanvas-collapse .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+  .offcanvas-collapse .nav-link {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 500;
+    color: #000;
+  }
+
+  .offcanvas-collapse .nav-link:hover {
+    color: #0039bf;
+  }
+
+  /* Submenús visibles siempre */
+  .offcanvas-collapse .dropdown-menu {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    position: static !important;
+    box-shadow: none;
+    background: transparent !important;
+    border: none !important;
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+
+  .offcanvas-collapse .dropdown-item {
+    padding: 0.25rem 0 0.25rem 1.5rem;
+  }
+}
+
+.logo-responsive {
+    max-height: 120px;
+    max-width: 90%;
+    height: auto;
+  }
+
+  /* En móviles */
+  @media (max-width: 576px) {
+    .logo-responsive {
+      max-height: 80px; /* Reduce altura para móviles */
+      max-width: 80%;
+    }
+  }
+
+  img.footer {
+  filter: invert(1) brightness(100);
+}
+
+img.ribbon {
+  filter: brightness(0);
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Excursionista Capdevielle</title>
+</head>
+
+<body>
+
+
+        <h1>Principal</h1>
+
+        <h1>Lista de Usuarios</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Email</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Género</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(user=> { %>
+                    <tr>
+                        <td>
+                            <%= user.id %>
+                        </td>
+                        <td>
+                            <%= user.nombre1 %>
+                                <%= user.nombre2 ? user.nombre2 : '' %>
+                                    <%= user.apellido1 %>
+                                        <%= user.apellido2 %>
+                        </td>
+                        <td>
+                            <%= user.email %>
+                        </td>
+                        <td>
+                            <%= user.fecha_nacimiento ? user.fecha_nacimiento.toISOString().split('T')[0] : '' %>
+                        </td>
+                        <td>
+                            <%= user.genero %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+
+</body>
+
+</html>
