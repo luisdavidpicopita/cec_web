@@ -1,15 +1,30 @@
-import express from 'express'
-import {dirname, join} from 'path'
-import { fileURLToPath } from 'url'
-import pkg from 'pg'
-import indexRoutes from './routes/index.js'
-import cors from 'cors'
+// ==============================
+// 📦 IMPORTACIONES
+// ==============================
 
-const { Pool } = pkg
+import express from 'express';
+import path, { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+import pkg from 'pg';
+import cors from 'cors';
+import multer from 'multer';
 
-const app = express()
+import indexRoutes from './routes/rutas.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url))
+// ==============================
+// 📌 CONFIGURACIONES INICIALES
+// ==============================
+
+const app = express();
+const { Pool } = pkg;
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// ==============================
+// 🗄️ CONEXIÓN A BASE DE DATOS
+// ==============================
 
 const pool = new Pool({
   user: 'postgres',
@@ -17,30 +32,54 @@ const pool = new Pool({
   database: 'cec',
   password: '0000',
   port: 5432,
-})
+});
 
-
-app.use(cors({
-  origin: 'http://localhost:4200',  
-}));
+pool.query('SELECT NOW()')
+  .then(res => console.log('✅ PostgreSQL conectado:', res.rows[0]))
+  .catch(err => console.error('❌ Error conexión PostgreSQL:', err));
 
 app.use((req, res, next) => {
   req.pool = pool;
   next();
 });
 
-pool.query('SELECT NOW()')
-  .then(res => console.log('PostgreSQL conectado:', res.rows[0]))
-  .catch(err => console.error('Error conexión PostgreSQL:', err))
+// ==============================
+// 📤 CONFIGURACIÓN DE MULTER
+// ==============================
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, join(__dirname, 'public/uploads')); 
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const filename = Date.now() + ext;
+    cb(null, filename);
+  }
+});
 
-app.set('views', join(__dirname, 'views'))
+export const upload = multer({ storage });
 
-app.set('view engine', 'ejs')
+// ==============================
+// 🌍 CONFIGURACIONES DE LA APP
+// ==============================
 
-app.use(express.static(join(__dirname, 'public')))
+app.set('views', join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-app.use(indexRoutes)
+app.use(express.static(join(__dirname, 'public')));
 
-app.listen(3000)
-console.log('Server is listening on port', 3000)
+// ==============================
+// 🧭 RUTAS
+// ==============================
+
+app.use(indexRoutes); 
+
+// ==============================
+// 🚀 INICIO DEL SERVIDOR
+// ==============================
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
+});

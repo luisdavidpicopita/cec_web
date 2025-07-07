@@ -127,10 +127,16 @@
     }
   }
 
-  img.footer {
+img.footer {
   filter: invert(1) brightness(100);
 }
 
 img.ribbon {
   filter: brightness(0);
+}
+
+.carousel-indicators {
+  position: absolute; 
+  bottom: 1rem;
+  z-index: 1; 
 }
