@@ -16,19 +16,15 @@
 
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
-    <% articulos.forEach((articulo, index) => { %>
+    <% carrusel.forEach((elemento, index) => { %>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 ? 'true' : 'false' %>" aria-label="Slide <%= index + 1 %>"></button>
     <% }); %>
   </div>
 
   <div class="carousel-inner">
-    <% articulos.forEach((articulo, index) => { %>
+    <% carrusel.forEach((elemento, index) => { %>
       <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-        <img src="<%= articulo.foto %>" class="d-block w-100" alt="<%= articulo.titulo %>">
-        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-          <h5><%= articulo.titulo %></h5>
-          <p><%= articulo.texto_corto %></p>
-        </div>
+        <a href="<%= elemento.ruta_destino %>#<%= elemento.seccion %>"><img src="<%= elemento.foto %>" class="d-block w-100" alt="<%= elemento.titulo %>"></a>
       </div>
     <% }); %>
   </div>

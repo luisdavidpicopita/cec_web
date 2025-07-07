@@ -6,17 +6,27 @@ const router = Router();
 // PÁGINA PRINCIPALES
 router.get('/', async (req, res) => {
   try {
-    const result = await req.pool.query(`
-      SELECT a.id, a.titulo, a.foto, a.texto_corto
-      FROM articulo a
-      INNER JOIN pagina_articulo pa ON pa.articulo_id = a.id
-      INNER JOIN pagina p ON p.id = pa.pagina_id
-      WHERE p.nombre = 'Principal' AND a.visible = TRUE
-      ORDER BY a.fecha_creacion DESC
-      LIMIT 5
-    `);
+    
+    const carrusel = await req.pool.query(`
+  SELECT 
+    a.id, 
+    a.titulo, 
+    a.foto, 
+    p_origen.ruta AS ruta_origen, 
+    p_destino.ruta AS ruta_destino, 
+    pa.seccion
+  FROM articulo a
+  INNER JOIN pagina_articulo pa ON pa.articulo_id = a.id
+  INNER JOIN pagina p_origen ON p_origen.id = pa.pagina_id
+  LEFT JOIN pagina p_destino ON p_destino.id = pa.pagina_destino_id
+  WHERE p_origen.ruta = '/' 
+    AND pa.elemento = 1 
+    AND a.visible = TRUE
+  ORDER BY pa.orden DESC
+`);
 
-    res.render('index', { articulos: result.rows });
+
+    res.render('index', { carrusel: carrusel.rows });
 
   } catch (error) {
     console.error('Error al cargar el carrusel:', error);
