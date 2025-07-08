@@ -7,56 +7,58 @@
     <title>¿Qué es el CEC?</title>
     <%- include('partials/head') %>
         <link rel="stylesheet" href="/main.css">
+        <link rel="icon" href="img/icono.png" type="image/png">
 </head>
 
 <body>
 
     <%- include('partials/header')%>
 
-    <%- include('partials/ribbon')%>
+        <%- include('partials/ribbon')%>
 
-    <div class="container mt-5 mb-5">
-    <h2 class="mb-4">Áreas del Centro Excursionista Capdevielle</h2>
+            <div class="container mt-5 mb-5">
 
-    <% if (cec && cec.length > 0) { %>
+                <% if (cec && cec.length> 0) { %>
+                    <% for (let seccionNum=1; seccionNum <=6; seccionNum++) { const items=cec.filter(tema=> tema.seccion
+                        === seccionNum);
+                        if (items.length > 0) { %>
+                        <section id="<%= seccionNum %>" class="mb-5">
+                            <hr class="mb-4" />
 
-      <% for (let seccionNum = 1; seccionNum <= 6; seccionNum++) {
-            const items = cec.filter(tema => tema.seccion === seccionNum);
-            if (items.length > 0) {
-      %>
-        <section id="<%= seccionNum %>" class="mb-5">
-          <hr class="mb-4">
+                            <% items.forEach(tema=> { %>
+                                <div class="text-center mb-4 mx-auto" style="max-width: 700px;">
+                                    <!-- Título centrado -->
+                                    <h2 class="fw-bold mb-3">
+                                        <%= tema.titulo %>
+                                    </h2>
 
-          <div class="row">
-            <% items.forEach(tema => { %>
-              <div class="col-md-6">
-                <div class="card h-100 shadow-sm rounded-4 overflow-hidden mb-4">
-                  <div class="row g-0 h-100 flex-md-row-reverse">
-                    <div class="col-md-5">
-                      
-                        <img src="<%= tema.foto %>" class="img-fluid h-100 w-100 object-fit-cover" alt="<%= tema.titulo %>">
-                     
-                    </div>
-                    <div class="col-md-7 d-flex align-items-center">
-                      <div class="card-body">
-                        <h5 class="card-title fw-bold fs-3 mb-4"><%= tema.titulo %></h5>
-                        <p class="card-text fs-6" style="text-align: justify;"><%= tema.texto_corto || '' %></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% }) %>
-          </div>
-        </section>
-      <% }} %>
-    <% } else { %>
-      <p class="text-center mt-5">No hay temas registrados en este momento.</p>
-    <% } %>
+                                    <!-- Imagen centrada -->
+                                    <% if (tema.foto) { %>
+  <div class="mb-3 overflow-hidden rounded mx-auto" style="max-width: 700px; height: 400px; width: 100%;">
+    <img src="<%= tema.foto %>" alt="<%= tema.titulo %>"
+         class="w-100 h-100"
+         style="object-fit: cover;">
   </div>
-    
+<% } %>
 
-    <%- include('partials/footer')%>
+                                    <!-- Texto justificado -->
+                                    <div class="text-start">
+              <p class="fs-6 fw-light lh-lg" style="text-align: justify;">
+                <%= tema.texto_largo || '' %>
+              </p>
+            </div>
+                                </div>
+                                <% }) %>
+                        </section>
+
+                        <% }} %>
+                            <% } else { %>
+                                <p class="text-center mt-5">No hay temas registrados en este momento.</p>
+                                <% } %>
+            </div>
+
+
+            <%- include('partials/footer')%>
 </body>
 
 </html>

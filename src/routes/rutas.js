@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
     `);
 
     const areas = await req.pool.query(`
-      SELECT a.id, a.titulo, a.foto, p_origen.ruta AS ruta_origen, 
+      SELECT a.id, a.titulo, a.foto, a.texto_corto, p_origen.ruta AS ruta_origen, 
              p_destino.ruta AS ruta_destino, pa.seccion
       FROM articulo a
       INNER JOIN pagina_articulo pa ON pa.articulo_id = a.id

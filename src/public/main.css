@@ -127,6 +127,21 @@
     }
   }
 
+  .principal-responsive {
+    max-height: 300px;
+    max-width: 100%;
+    height: auto;
+  }
+
+
+  /* En móviles */
+  @media (max-width: 576px) {
+    .principal-responsive {
+      max-height: 180px; /* Reduce altura para móviles */
+      max-width: 30%;
+    }
+  }
+
 img.footer {
   filter: invert(1) brightness(100);
 }
@@ -146,5 +161,84 @@ img.ribbon {
   height: 200px;        /* altura fija */
   object-fit: cover;    /* sin distorsionar, recorta */
   object-position: center center; /* centra la imagen en el recorte */
+}
+
+.cec-parrafo {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.gradient-iniciados {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 170, 0, 0.5) 0%,   /* oscuro arriba */
+    rgba(0, 0, 0, 0) 30%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 70%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 100%  /* oscuro abajo */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gradient-roja {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0.5) 0%,   /* oscuro arriba */
+    rgba(0, 0, 0, 0) 30%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 70%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 100%  /* oscuro abajo */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gradient-amarilla {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 221, 0, 0.5) 0%,   /* oscuro arriba */
+    rgba(0, 0, 0, 0) 30%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 70%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 100%  /* oscuro abajo */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gradient-uni {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.5) 0%,   /* oscuro arriba */
+    rgba(0, 0, 0, 0) 30%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 70%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 100%  /* oscuro abajo */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gradient-gya {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 229, 255, 0.5) 0%,   /* oscuro arriba */
+    rgba(0, 0, 0, 0) 30%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 70%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 100%  /* oscuro abajo */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.gradient-directiva {
+  background: linear-gradient(
+    to bottom,
+    rgba(21, 255, 0, 0.5) 0%,   /* oscuro arriba */
+    rgba(0, 0, 0, 0) 30%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 70%,    /* transparente al centro */
+    rgba(0, 0, 0, 0) 100%  /* oscuro abajo */
+  );
+  z-index: 1;
+  pointer-events: none;
 }
 
