@@ -35,8 +35,8 @@ const pool = new Pool({
 });
 
 pool.query('SELECT NOW()')
-  .then(res => console.log('✅ PostgreSQL conectado:', res.rows[0]))
-  .catch(err => console.error('❌ Error conexión PostgreSQL:', err));
+  .then(res => console.log('PostgreSQL conectado:', res.rows[0]))
+  .catch(err => console.error('Error conexión PostgreSQL:', err));
 
 app.use((req, res, next) => {
   req.pool = pool;
@@ -81,5 +81,5 @@ app.use(indexRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

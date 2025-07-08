@@ -2,182 +2,236 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro Excursionista Capdevielle</title>
-    <%- include('partials/head') %>
-        <link rel="stylesheet" href="/main.css">
-        <link rel="icon" href="img/icono.png" type="image/png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Centro Excursionista Capdevielle</title>
+  <%- include('partials/head') %>
+  <link rel="stylesheet" href="/main.css" />
+  <link rel="icon" href="img/icono.png" type="image/png" />
 </head>
 
 <body>
 
-    <%- include('partials/header')%>
+  <%- include('partials/header') %>
+  <%- include('partials/ribbon') %>
 
-        <%- include('partials/ribbon')%>
+  <div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Nuevo Artículo</h5>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/formulario_home" enctype="multipart/form-data">
 
-            <div class="container mt-5">
-                <div class="card shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Nuevo Artículo</h5>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="/formulario_home" enctype="multipart/form-data">
+          <!-- Título -->
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título del artículo" required />
+          </div>
 
-                            <div class="mb-3">
-                                <label for="titulo" class="form-label">Título</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo"
-                                    placeholder="Título del artículo">
-                            </div>
+          <!-- Autor debajo del título -->
+          <div class="mb-3">
+            <label for="usuario_id" class="form-label">Autor del artículo</label>
+            <select class="form-select select2" id="usuario_id" name="usuario_id" required>
+              <option value="" disabled selected>Seleccione un usuario</option>
+              <% usuarios.forEach(usuario => { %>
+              <option value="<%= usuario.id %>">
+                <%= usuario.nombre1 %> <%= usuario.apellido1 %>
+              </option>
+              <% }) %>
+            </select>
+          </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="pagina" class="form-label">Páginas</label>
-                                    <select class="form-select select2" id="pagina" name="pagina[]" multiple required>
-                                        <% paginas.forEach(pagina=> { %>
-                                            <option value="<%= pagina.id %>">
-                                                <%= pagina.nombre %>
-                                            </option>
-                                            <% }) %>
-                                    </select>
-                                </div>
+          <!-- Selector múltiple páginas -->
+          <div class="mb-3">
+            <label for="pagina" class="form-label">Páginas</label>
+            <select class="form-select select2" id="pagina" name="pagina[]" multiple required>
+              <% paginas.forEach(pagina => { %>
+              <option value="<%= pagina.id %>"><%= pagina.nombre %></option>
+              <% }) %>
+            </select>
+          </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="usuario_id" class="form-label">Autor del artículo</label>
-                                    <select class="form-select select2" id="usuario_id" name="usuario_id" required>
-                                        <option value="" disabled selected>Seleccione un usuario</option>
-                                        <% usuarios.forEach(usuario=> { %>
-                                            <option value="<%= usuario.id %>">
-                                                <%= usuario.nombre1 %>
-                                                    <%= usuario.apellido1 %>
-                                            </option>
-                                            <% }) %>
-                                    </select>
-                                </div>
-                            </div>
+          <!-- Orden general del artículo -->
+          <div class="mb-3">
+            <label for="orden" class="form-label">Orden general del artículo</label>
+            <input type="number" class="form-control" id="orden" name="orden" placeholder="Número de orden" min="1" step="1"
+              required />
+          </div>
 
+          <!-- Campos dinámicos para elemento específico por página -->
+          <div id="elementosPorPagina" class="mb-4"></div>
 
-                            <div class="mb-3">
-                                <label for="texto_corto" class="form-label">Texto corto</label>
-                                <input type="text" class="form-control" id="texto_corto" name="texto_corto"
-                                    placeholder="Resumen o subtítulo">
-                            </div>
+          <!-- Texto corto -->
+          <div class="mb-3">
+            <label for="texto_corto" class="form-label">Texto corto</label>
+            <input type="text" class="form-control" id="texto_corto" name="texto_corto" placeholder="Resumen o subtítulo" required />
+          </div>
 
-                            <div class="mb-3">
-                                <label for="texto_largo" class="form-label">Texto largo</label>
-                                <textarea class="form-control" id="texto_largo" name="texto_largo" rows="5"
-                                    placeholder="Contenido completo"></textarea>
-                            </div>
+          <!-- Texto largo -->
+          <div class="mb-3">
+            <label for="texto_largo" class="form-label">Texto largo</label>
+            <textarea class="form-control" id="texto_largo" name="texto_largo" rows="5" placeholder="Contenido completo"
+              required></textarea>
+          </div>
 
-                            <div class="mb-3">
-                                <label for="foto" class="form-label">Subir imagen</label>
-                                <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
-                            </div>
+          <!-- Subir imagen -->
+          <div class="mb-3">
+            <label for="foto" class="form-label">Subir imagen</label>
+            <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required />
+          </div>
 
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-success">Guardar artículo</button>
-                            </div>
+          <!-- Convertir en link -->
+          <fieldset class="border p-3 mb-4">
+            <legend class="float-none w-auto px-2">Convertir en link</legend>
 
-                        </form>
-                    </div>
-                </div>
+            <div class="mb-3">
+              <label for="pagina_destino" class="form-label">Página destino</label>
+              <select class="form-select" id="pagina_destino" name="pagina_destino">
+                <option value="" selected>Seleccione una página</option>
+                <% paginas.forEach(pagina => { %>
+                <option value="<%= pagina.id %>"><%= pagina.nombre %></option>
+                <% }) %>
+              </select>
             </div>
 
-            <%- include('partials/footer')%>
+            <div class="mb-3">
+              <label for="seccion" class="form-label">Sección (número)</label>
+              <input type="number" class="form-control" id="seccion" name="seccion" placeholder="Número de sección" min="1"
+                step="1" />
+            </div>
+          </fieldset>
 
-</body>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-success">Guardar artículo</button>
+          </div>
 
-</html>
+        </form>
+      </div>
+    </div>
+  </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    const paginaSelect = document.getElementById('pagina');
+    const contenedorElementos = document.getElementById('elementosPorPagina');
 
-<script>
-    $(document).ready(function () {
-        $('.select2').select2({
-            placeholder: "Selecciona una o más páginas",
-            allowClear: true
-        });
+    function actualizarCamposElemento() {
+      const seleccionadas = Array.from(paginaSelect.selectedOptions).map(opt => ({
+        id: opt.value,
+        nombre: opt.text
+      }));
+
+      contenedorElementos.innerHTML = '';
+
+      if (seleccionadas.length === 0) {
+        contenedorElementos.innerHTML =
+          '<p class="text-muted">Seleccione una o más páginas para definir el número de elemento por página.</p>';
+        return;
+      }
+
+      seleccionadas.forEach(pagina => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'mb-3 border p-3 rounded';
+
+        wrapper.innerHTML = `
+          <h6>Elemento para página: <strong>${pagina.nombre}</strong></h6>
+          <label for="elemento_pagina_${pagina.id}" class="form-label">Número de elemento</label>
+          <input type="number" class="form-control" id="elemento_pagina_${pagina.id}" name="elemento_pagina_${pagina.id}" min="1" step="1" placeholder="Número de elemento para esta página" required>
+        `;
+
+        contenedorElementos.appendChild(wrapper);
+      });
+    }
+
+    paginaSelect.addEventListener('change', actualizarCamposElemento);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (paginaSelect.selectedOptions.length > 0) {
+        actualizarCamposElemento();
+      }
     });
-</script>
+  </script>
 
-
-<style>
+  <style>
     /* Estilo para que Select2 se parezca al input de Bootstrap */
     .select2-container--default .select2-selection--single {
-        height: 38px;
-        padding: 6px 12px;
-        border: 1px solid #ced4da;
-        border-radius: 0.375rem;
+      height: 38px;
+      padding: 6px 12px;
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
     }
 
     .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 24px;
+      line-height: 24px;
     }
 
     .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 36px;
-        right: 10px;
+      height: 36px;
+      right: 10px;
     }
 
     .select2-container--default.select2-container--focus .select2-selection--single {
-        border-color: #86b7fe;
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+      border-color: #86b7fe;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
     }
 
     /* Para que ocupe el 100% del ancho del formulario */
     .select2-container {
-        width: 100% !important;
+      width: 100% !important;
     }
 
     /* Select2 con múltiples valores */
-  .select2-container--default .select2-selection--multiple {
-    border: 1px solid #ced4da;
-    border-radius: 0.375rem;
-    min-height: 38px;
-    padding: 6px;
-  }
+    .select2-container--default .select2-selection--multiple {
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
+      min-height: 38px;
+      padding: 6px;
+    }
 
-  .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #0d6efd;
-    border: none;
-    color: white;
-    padding: 2px 8px;
-    margin-top: 5px;
-    margin-right: 4px;
-    border-radius: 4px;
-  }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      background-color: #0d6efd;
+      border: none;
+      color: white;
+      padding: 2px 8px;
+      margin-top: 5px;
+      margin-right: 4px;
+      border-radius: 4px;
+    }
 
-  /* Select2 modo simple */
-  .select2-container--default .select2-selection--single {
-    height: 38px;
-    padding: 6px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 0.375rem;
-    display: flex;
-    align-items: center;
-  }
+    /* Select2 modo simple */
+    .select2-container--default .select2-selection--single {
+      height: 38px;
+      padding: 6px 12px;
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+    }
 
-  .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 24px;
-    color: #212529;
-  }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      line-height: 24px;
+      color: #212529;
+    }
 
-  .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 36px;
-    right: 10px;
-  }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: 36px;
+      right: 10px;
+    }
 
-  /* Enfoque */
-  .select2-container--default.select2-container--focus .select2-selection {
-    border-color: #86b7fe;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
-  }
+    /* Enfoque */
+    .select2-container--default.select2-container--focus .select2-selection {
+      border-color: #86b7fe;
+      outline: 0;
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+    }
 
-  /* Para ocupar 100% */
-  .select2-container {
-    width: 100% !important;
-  }
-</style>
+    /* Para ocupar 100% */
+    .select2-container {
+      width: 100% !important;
+    }
+  </style>
+
+</body>
+
+</html>

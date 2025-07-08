@@ -140,3 +140,11 @@ img.ribbon {
   bottom: 1rem;
   z-index: 1; 
 }
+
+.img-area {
+  width: 100%;
+  height: 200px;        /* altura fija */
+  object-fit: cover;    /* sin distorsionar, recorta */
+  object-position: center center; /* centra la imagen en el recorte */
+}
+

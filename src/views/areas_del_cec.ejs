@@ -1,90 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Áreas del CEC</title>
-    <%- include('partials/head') %>
-        <link rel="stylesheet" href="/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Áreas del CEC</title>
+  <%- include('partials/head') %>
+  <link rel="stylesheet" href="/main.css">
 </head>
 
 <body>
+  <%- include('partials/header') %>
+  <%- include('partials/ribbon') %>
 
-    <%- include('partials/header')%>
+  <div class="container mt-5 mb-5">
+    <h2 class="mb-4">Áreas del Centro Excursionista Capdevielle</h2>
 
-        <%- include('partials/ribbon')%>
+    <% if (areas && areas.length > 0) { %>
 
+      <% for (let seccionNum = 1; seccionNum <= 6; seccionNum++) {
+            const items = areas.filter(area => area.seccion === seccionNum);
+            if (items.length > 0) {
+      %>
+        <section id="<%= seccionNum %>" class="mb-5">
+          <hr class="mb-4">
 
-            <section id="1">
-                <h1>Iniciados</h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-            </section>
+          <div class="row">
+            <% items.forEach(area => { %>
+              <div class="col-md-6">
+                <div class="card h-100 shadow-sm rounded-4 overflow-hidden mb-4">
+                  <div class="row g-0 h-100 flex-md-row-reverse">
+                    <div class="col-md-5">
+                     
+                        <img src="<%= area.foto %>" class="img-fluid h-100 w-100 object-fit-cover" alt="<%= area.titulo %>">
+                      
+                    </div>
+                    <div class="col-md-7 d-flex align-items-center">
+                      <div class="card-body">
+                        <h5 class="card-title fw-bold fs-3 mb-4"><%= area.titulo %></h5>
+                        <p class="card-text fs-6" style="text-align: justify;"><%= area.texto_corto || '' %></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        </section>
+      <% }} %>
+    <% } else { %>
+      <p class="text-center mt-5">No hay áreas registradas en este momento.</p>
+    <% } %>
+  </div>
 
-            <section id="2">
-                <h1>Roja</h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-            </section>
-
-            <section id="3">
-                <h1>Amarilla</h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-            </section>
-
-            <section id="4">
-                <h1>Universitaria</h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-            </section>
-
-            <section id="5">
-                <h1>Guías y Asesores</h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-            </section>
-
-            <section id="6">
-                <h1>Directiva</h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-                <h1>. </h1>
-            </section>
-
-
-            <%- include('partials/footer')%>
-
+  <%- include('partials/footer') %>
 </body>
 
 </html>

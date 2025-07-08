@@ -1,61 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro Excursionista Capdevielle</title>
-    <%- include('partials/head') %>
-    <link rel="stylesheet" href="/main.css"> 
-    <link rel="icon" href="img/icono.png"  type="image/png"> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro Excursionista Capdevielle</title>
+  <%- include('partials/head') %>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="icon" href="img/icono.png" type="image/png">
 </head>
+
 <body>
 
-    <%- include('partials/header')%>
+
+  <%- include('partials/header')%>
 
     <%- include('partials/ribbon')%>
 
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <% carrusel.forEach((elemento, index) => { %>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 ? 'true' : 'false' %>" aria-label="Slide <%= index + 1 %>"></button>
-    <% }); %>
-  </div>
+      <% if (carrusel && carrusel.length> 0) { %>
+        <div id="carousel_principal" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <% carrusel.forEach((elemento, index)=> { %>
+              <button type="button" data-bs-target="#carousel_principal" data-bs-slide-to="<%= index %>"
+                class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 ? 'true' : 'false' %>"
+                aria-label="Slide <%= index + 1 %>"></button>
+              <% }); %>
+          </div>
 
-  <div class="carousel-inner">
-    <% carrusel.forEach((elemento, index) => { %>
-      <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-        <a href="<%= elemento.ruta_destino %>#<%= elemento.seccion %>"><img src="<%= elemento.foto %>" class="d-block w-100" alt="<%= elemento.titulo %>"></a>
-      </div>
-    <% }); %>
-  </div>
 
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Anterior</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Siguiente</span>
-  </button>
-</div>
+          <div class="carousel-inner">
+            <% carrusel.forEach((elemento, index)=> { %>
+              <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                <a href="<%= elemento.ruta_destino %>#<%= elemento.seccion %>">
+                  <img src="<%= elemento.foto %>" class="d-block w-100" alt="<%= elemento.titulo %>">
+                </a>
+              </div>
+              <% }); %>
+          </div>
 
-    
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
-    <h1>PRINCIPAL</h1>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carousel_principal" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carousel_principal" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
+        </div>
+        <% } else { %>
+          <p class="text-center mt-4">No hay imágenes disponibles para el carrusel.</p>
+          <% } %>
 
-    <%- include('partials/footer')%>
+            <!-- Contenedor principal -->
+            <div class="container mt-5">
 
+              <!-- Fila: ¿Qué es el CEC? a la izquierda, Historia a la derecha -->
+              <div class="row g-4 align-items-stretch mb-5">
+                <% if (tarjeta_cec) { %>
+                  <div class="col-md-6">
+                    <div class="card h-100 shadow-sm rounded-4 overflow-hidden mb-4">
+                      <div class="row g-0 h-100">
+                        <div class="col-md-5">
+                          <a href="<%= tarjeta_cec.ruta_destino %>#<%= tarjeta_cec.seccion %>">
+                            <img src="<%= tarjeta_cec.foto %>" class="img-fluid h-100 w-100 object-fit-cover"
+                              alt="<%= tarjeta_cec.titulo %>">
+                          </a>
+                        </div>
+                        <div class="col-md-7 d-flex align-items-center">
+                          <div class="card-body">
+                            <h5 class="card-title fw-bold fs-3 mb-4">
+                              <%= tarjeta_cec.titulo %>
+                            </h5>
+                            <p class="card-text fs-6" style="text-align: justify;">
+                              <%= tarjeta_cec.texto_corto %>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+
+                    <% if (historia_cec) { %>
+                      <div class="col-md-6">
+                        <div class="card h-100 shadow-sm rounded-4 overflow-hidden mb-4">
+                          <div class="row g-0 h-100 flex-md-row-reverse">
+                            <div class="col-md-5">
+                              <a href="<%= historia_cec.ruta_destino %>#<%= historia_cec.seccion %>">
+                                <img src="<%= historia_cec.foto %>" class="img-fluid h-100 w-100 object-fit-cover"
+                                  alt="<%= historia_cec.titulo %>">
+                              </a>
+                            </div>
+                            <div class="col-md-7 d-flex align-items-center">
+                              <div class="card-body">
+                                <h5 class="card-title fw-bold fs-3 mb-4">
+                                  <%= historia_cec.titulo %>
+                                </h5>
+                                <p class="card-text fs-6" style="text-align: justify;">
+                                  <%= historia_cec.texto_corto %>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+              </div>
+
+              <div style="border-top: 1px solid #ddd; padding-top: 0.5rem; margin-bottom: 1rem;">
+                <h5 class="card-title fw-bold fs-3 mb-4 mt-3">Áreas del CEC</h5>
+              </div>
+
+              <% if (areas && areas.length> 0) { %>
+                <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+                  <% areas.forEach(area=> { %>
+                    <div class="col">
+                      <div class="card shadow-sm rounded-4">
+                        <a href="<%= area.ruta_destino %>#<%= area.seccion %>">
+                          <img src="<%= area.foto %>" class="card-img-top img-area" alt="<%= area.titulo %>">
+                        </a>
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            <%= area.titulo %>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                    <% }) %>
+                </div>
+                <% } else { %>
+                  <p class="text-center mt-4">No hay imágenes disponibles para el bloque.</p>
+                  <% } %>
+
+
+            </div>
+
+
+
+
+            <%- include('partials/footer')%>
 
 </body>
+
 </html>
